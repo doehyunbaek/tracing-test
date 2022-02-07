@@ -1,18 +1,15 @@
-use log::{trace, info};
 use rand::Rng;
 use tokio::sync::mpsc;
+use tracing::{info, span, trace, Level, Span};
 use uuid::Uuid;
 //structure
 //three actors, sender, middle, final
 #[tokio::main]
 async fn main() {
-    env_logger::init();
-    let (tx, mut rx) = mpsc::unbounded_channel::<Data>();
-    let (tx2, mut rx2) = mpsc::unbounded_channel::<ImportantData>();
+    tracing_subscriber::fmt::init();
 
-    // //for us what defines a span? span should be a job id
-    // let span = span!(Level::TRACE, "shaving_yaks");
-    // let dd = span.enter();
+    let (tx, mut rx) = mpsc::unbounded_channel::<Data>();
+    let (tx2, mut rx2) = mpsc::unbounded_channel::<(ImportantData, Span)>();
 
     tokio::spawn(async move {
         while let Some(msg) = rx.recv().await {
@@ -24,26 +21,29 @@ async fn main() {
                         data
                     );
                 }
-                Data::Tracing(mut data) => {
+                Data::Tracing(mut data, span) => {
                     //increase the couter and send the data to final playing actor
                     trace!(
-                        "actor: middle, msg: received important data with job: {:?}",
-                        data
+                        "actor: middle, msg: received important data with job: {:?}, context: {:?}",
+                        data,
+                        span.metadata().unwrap().fields()
                     );
                     data.counter += 1;
-                    tx2.send(data).unwrap();
+                    tx2.send((data, span)).unwrap();
                 }
             }
         }
     });
 
     tokio::spawn(async move {
-        while let Some(data) = rx2.recv().await {
+        while let Some((data, mut span)) = rx2.recv().await {
             //print out import data
             trace!(
-                "actor: final, msg: received important data with job: {:?}",
-                data
+                "actor: final, msg: received important data with job: {:?}, context: {:?}",
+                data,
+                span.metadata().unwrap().fields()
             );
+            // span.drop();
         }
     });
 
@@ -59,8 +59,10 @@ async fn main() {
         } else {
             //important data
             let job_id = Uuid::new_v4().to_string();
+            let span = span!(Level::TRACE, "static string"); //dynamic span id is not recommended. key value pair is the recommende way
+                                                             // let _ = span.enter();
             let important = ImportantData { job_id, counter: 0 };
-            tx.send(Data::Tracing(important)).unwrap();
+            tx.send(Data::Tracing(important, span)).unwrap();
         }
         tokio::time::sleep(tokio::time::Duration::from_millis(100)).await;
     }
@@ -69,7 +71,7 @@ async fn main() {
 #[derive(Debug)]
 enum Data {
     Log(UselessData),
-    Tracing(ImportantData),
+    Tracing((ImportantData), Span),
 }
 
 #[derive(Debug)]
