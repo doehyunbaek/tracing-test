@@ -1,0 +1,8 @@
+GET employees/_search
+{
+  "query": {
+    "prefix": {
+      "name": "al"
+    }
+  }
+}

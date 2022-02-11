@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: axe-tracing
+  labels:
+    app: tracing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tracing
+  template:
+    spec:
+      # nodeSelector:
+      #   service: axe-worker
+      imagePullSecrets:
+        - name: dockerhubkey
+      containers:
+        - name: axe-tracing
+          image: qraftaxe/axe-tracing:develop
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 50052
