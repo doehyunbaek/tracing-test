@@ -10,14 +10,15 @@ spec:
     matchLabels:
       app: tracing
   template:
+    metadata:
+      labels:
+        app: tracing
     spec:
-      # nodeSelector:
-      #   service: axe-worker
       imagePullSecrets:
         - name: dockerhubkey
       containers:
         - name: axe-tracing
-          image: qraftaxe/axe-tracing:develop
+          image: qraftaxe/axe-tracing:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 50052
