@@ -30,8 +30,10 @@ only been tested on my local machine with ubuntu 20.04
 
 0. Run elasticsearch and kibana locally
 
+https://jinhokwon.github.io/devops/elasticsearch/elasticsearch-docker/
+
 ```
-docker exec -i -t elasticsearch7 cat /usr/share/elasticsearch/config/elasticsearch.yml
+docker run -d -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" --name elasticsearch7 docker.elastic.co/elasticsearch/elasticsearch:7.9.1
 
 docker run -d --link elasticsearch7:elasticsearch -p 5601:5601 --name kibana7 docker.elastic.co/kibana/kibana:7.9.1
 ```
@@ -46,6 +48,9 @@ minikube start
 
 2. Deploy fluentbit
 
+since the fluent bit pod running inside the minikube need to access es container outside minikube docker, 
+you need to change fluent_bit/config.yaml file so that host points to the actual ip address of host.minikube.internal.
+For my case, it is 192.168.49.1 but could be different on yours 
 ```
 kubectl apply -f fluent_bit/role.yaml
 kubectl apply -f fluent_bit/config.yaml
@@ -64,3 +69,7 @@ kubectl apply -f sample.yaml
    group logs by uuid, measure time between each logs from 1, measure time between logs that we want from 1 respectively.
 
    Queries were written in json format since we will probably use elasticsearch client to make api calls for scripting and in this case, painless scripting is actually very painful.
+
+### Minor debuggin
+
+https://serverfault.com/questions/1063166/kube-proxy-wont-start-in-minikube-because-of-permission-denied-issue-with-proc
