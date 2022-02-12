@@ -48,9 +48,10 @@ minikube start
 
 2. Deploy fluentbit
 
-since the fluent bit pod running inside the minikube need to access es container outside minikube docker, 
+since the fluent bit pod running inside the minikube need to access es container outside minikube docker,
 you need to change fluent_bit/config.yaml file so that host points to the actual ip address of host.minikube.internal.
-For my case, it is 192.168.49.1 but could be different on yours 
+For my case, it is 192.168.49.1 but could be different on yours machine
+
 ```
 kubectl apply -f fluent_bit/role.yaml
 kubectl apply -f fluent_bit/config.yaml
@@ -69,6 +70,34 @@ kubectl apply -f sample.yaml
    group logs by uuid, measure time between each logs from 1, measure time between logs that we want from 1 respectively.
 
    Queries were written in json format since we will probably use elasticsearch client to make api calls for scripting and in this case, painless scripting is actually very painful.
+
+### Future steps
+
+this may vary based on our need
+
+1. send request to get unique uuids
+2. send request for each unique uuid to get logs sorted with timestamp
+3. calculute necessary data(latency etc) based on data from 2
+4. add all data from 3?
+
+```rust
+//simple pseudocode
+struct Log;
+struct MeaningfulData;
+struct Goal;
+fn get_list_of_uuids() -> Vec<String>;
+fn send_request_for_uuid(uuid: String) -> Vec<Log>;
+fn calculate_data(logs: Vec<Log>) -> MeaningfulData;
+fn ananlyze_meaningful_data(data: Vec<MeaningfulData>) -> Goal;
+
+let uuids = get_list_of_uuids();
+let mut meaningful_datas= vec![];
+for uuid in uuids {
+   meanigful_datas.push(calculate_data(send_request_for_uuid(uuid)));
+}
+let goal = ananlyze_meaningful_data(meaningful_datas);
+//done
+```
 
 ### Minor debuggin
 
