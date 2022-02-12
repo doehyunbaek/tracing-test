@@ -6,6 +6,7 @@ use uuid::Uuid;
 #[tokio::main]
 async fn main() {
     //create senders
+    println!("starting tracing test");
     env_logger::init();
     let (middle_tx, mut middle_rx) = mpsc::unbounded_channel::<Message>();
     let (final_tx, mut final_rx) = mpsc::unbounded_channel::<Message>();

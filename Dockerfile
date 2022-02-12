@@ -44,4 +44,5 @@ RUN cargo build --target x86_64-unknown-linux-gnu --release
 FROM frolvlad/alpine-glibc:latest
 RUN apk --no-cache add ca-certificates
 COPY --from=builder /app/tracing-test/target/x86_64-unknown-linux-gnu/release/tracing-test .
-ENTRYPOINT ["./tracing-test"]
+ENTRYPOINT ["/bin/sh", "-c" , "RUST_LOG=trace ./tracing-test"]
+# ENTRYPOINT ["./tracing-test"]
