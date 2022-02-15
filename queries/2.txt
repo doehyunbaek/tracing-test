@@ -1,0 +1,20 @@
+GET /tracing/_search
+{
+    "query": {
+       "match_all": {}
+    },
+    "from": 0,
+    "size": 1000,
+    "_source": [
+        "@timestamp",
+    ],
+    "sort": [{
+            "@timestamp": {
+                "order": "desc"
+            }
+        }
+    ]
+}
+
+1. first query should only select based on the namespace to rule out kube-system
+2. query should be sorted in the timestamp order

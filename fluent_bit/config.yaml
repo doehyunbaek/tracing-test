@@ -55,6 +55,14 @@ data:
         Logstash_Format Off
         Replace_Dots    On
         Retry_Limit     False
+    
+    [FILTER]
+        Name         parser
+        Parser       docker
+        Match        *
+        Key_Name     log
+        Reserve_Data On
+        Preserve_Key On
 
   parsers.conf: |
     [PARSER]
@@ -65,14 +73,12 @@ data:
         Time_Format %d/%b/%Y:%H:%M:%S %z
 
     [PARSER]
-        Name   json
-        Format json
-        Time_Key time
-        Time_Format %d/%b/%Y:%H:%M:%S %z
-
-    [PARSER]
         Name        docker
         Format      json
         Time_Key    time
         Time_Format %Y-%m-%dT%H:%M:%S.%L
         Time_Keep   On
+        # Command      |  Decoder | Field | Optional Action
+        # =============|==================|=================
+        # Decode_Field_As   escaped_utf8    log    do_next
+        Decode_Field_As   escaped      log

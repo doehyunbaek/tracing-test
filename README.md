@@ -75,8 +75,8 @@ kubectl apply -f sample.yaml
 
 this may vary based on our need
 
-1. send request to get unique uuids
-2. send request for each unique uuid to get logs sorted with timestamp
+1. send request to get unique uuids(using script1)
+2. send request for each unique uuid to get logs sorted with timestamp(using script2)
 3. calculute necessary data(latency etc) based on data from 2
 4. add all data from 3?
 
@@ -99,6 +99,6 @@ let goal = ananlyze_meaningful_data(meaningful_datas);
 //done
 ```
 
-### Minor debuggin
+### Minor debugging
 
 https://serverfault.com/questions/1063166/kube-proxy-wont-start-in-minikube-because-of-permission-denied-issue-with-proc
