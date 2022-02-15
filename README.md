@@ -99,6 +99,22 @@ let goal = ananlyze_meaningful_data(meaningful_datas);
 //done
 ```
 
+### Demo
+
+Role of this demo is to show how this poc could function as a tool for analyzing data
+1. send query for getting unique job_ids
+2. get list of unique job_ids => and compare(maybe make a validator)
+3. send request for each job_id and format data 
+4. calculate data we want and save
+5. visualize
+
+```
+cargo run --bin demo
+
+```
+Then, the result will be both saved as a csv file and printed out on the console.
+
+
 ### Minor debugging
 
 https://serverfault.com/questions/1063166/kube-proxy-wont-start-in-minikube-because-of-permission-denied-issue-with-proc

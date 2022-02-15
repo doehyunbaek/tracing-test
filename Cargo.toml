@@ -3,12 +3,21 @@ edition = "2018"
 name = "tracing-test"
 version = "0.1.0"
 
+[[bin]]
+name = "tracing-test"
+path = "src/main.rs"
+
+[[bin]]
+name = "demo"
+path = "src/script.rs"
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
 # tokio 
 # tracing 
 # log 
 # futures is all you need for this 
+elasticsearch = "7.14.0-alpha.1"
 env_logger = "0.8.1"
 json_logger = "0.1.0"
 rustc-serialize = "0.3.24"
