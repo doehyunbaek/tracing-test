@@ -1,1 +1,310 @@
-{"_shards": Object({"failed": Number(0), "skipped": Number(0), "successful": Number(1), "total": Number(1)}), "aggregations": Object({"genres": Object({"buckets": Array([Object({"doc_count": Number(599000), "key": String("job_id")})]), "doc_count_error_upper_bound": Number(0), "sum_other_doc_count": Number(0)})}), "hits": Object({"hits": Array([Object({"_id": String("2ZfB7H4BWEXoWcftSJGC"), "_index": String("tracing"), "_score": Number(1.0), "_source": Object({"@timestamp": String("2022-02-12T07:06:36.282Z"), "kubernetes": Object({"container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"), "container_image": String("fluent/fluent-bit:1.8"), "container_name": String("fluent-bit"), "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"), "host": String("minikube"), "labels": Object({"controller-revision-hash": String("7f666b4988"), "k8s-app": String("fluent-bit-logging"), "kubernetes_io/cluster-service": String("true"), "pod-template-generation": String("1"), "version": String("v1")}), "namespace_name": String("default"), "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"), "pod_name": String("fluent-bit-jt95t")}), "log": String("[2022/02/12 07:06:36] [debug] [input chunk] update output instances with new chunk size diff=675\n"), "stream": String("stderr"), "time": String("2022-02-12T07:06:36.282425023Z")}), "_type": String("_doc")}), Object({"_id": String("WJfB7H4BWEXoWcftSIyC"), "_index": String("tracing"), "_score": Number(1.0), "_source": Object({"@timestamp": String("2022-02-12T07:06:36.449Z"), "kubernetes": Object({"container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"), "container_image": String("fluent/fluent-bit:1.8"), "container_name": String("fluent-bit"), "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"), "host": String("minikube"), "labels": Object({"controller-revision-hash": String("7f666b4988"), "k8s-app": String("fluent-bit-logging"), "kubernetes_io/cluster-service": String("true"), "pod-template-generation": String("1"), "version": String("v1")}), "namespace_name": String("default"), "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"), "pod_name": String("fluent-bit-jt95t")}), "log": String("[2022/02/12 07:06:36] [debug] [input chunk] update output instances with new chunk size diff=1333\n"), "stream": String("stderr"), "time": String("2022-02-12T07:06:36.449019726Z")}), "_type": String("_doc")}), Object({"_id": String("WpfB7H4BWEXoWcftSIyC"), "_index": String("tracing"), "_score": Number(1.0), "_source": Object({"@timestamp": String("2022-02-12T07:06:36.449Z"), "kubernetes": Object({"container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"), "container_image": String("fluent/fluent-bit:1.8"), "container_name": String("fluent-bit"), "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"), "host": String("minikube"), "labels": Object({"controller-revision-hash": String("7f666b4988"), "k8s-app": String("fluent-bit-logging"), "kubernetes_io/cluster-service": String("true"), "pod-template-generation": String("1"), "version": String("v1")}), "namespace_name": String("default"), "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"), "pod_name": String("fluent-bit-jt95t")}), "log": String("[2022/02/12 07:06:36] [debug] [input chunk] update output instances with new chunk size diff=1334\n"), "stream": String("stderr"), "time": String("2022-02-12T07:06:36.449068195Z")}), "_type": String("_doc")}), Object({"_id": String("XJfB7H4BWEXoWcftSIyC"), "_index": String("tracing"), "_score": Number(1.0), "_source": Object({"@timestamp": String("2022-02-12T07:06:36.449Z"), "kubernetes": Object({"container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"), "container_image": String("fluent/fluent-bit:1.8"), "container_name": String("fluent-bit"), "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"), "host": String("minikube"), "labels": Object({"controller-revision-hash": String("7f666b4988"), "k8s-app": String("fluent-bit-logging"), "kubernetes_io/cluster-service": String("true"), "pod-template-generation": String("1"), "version": String("v1")}), "namespace_name": String("default"), "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"), "pod_name": String("fluent-bit-jt95t")}), "log": String("[2022/02/12 07:06:36] [debug] [input:tail:tail.0] inode=5804978 events: IN_MODIFY \n"), "stream": String("stderr"), "time": String("2022-02-12T07:06:36.449092208Z")}), "_type": String("_doc")}), Object({"_id": String("XpfB7H4BWEXoWcftSIyC"), "_index": String("tracing"), "_score": Number(1.0), "_source": Object({"@timestamp": String("2022-02-12T07:06:36.449Z"), "kubernetes": Object({"container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"), "container_image": String("fluent/fluent-bit:1.8"), "container_name": String("fluent-bit"), "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"), "host": String("minikube"), "labels": Object({"controller-revision-hash": String("7f666b4988"), "k8s-app": String("fluent-bit-logging"), "kubernetes_io/cluster-service": String("true"), "pod-template-generation": String("1"), "version": String("v1")}), "namespace_name": String("default"), "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"), "pod_name": String("fluent-bit-jt95t")}), "log": String("[2022/02/12 07:06:36] [debug] [input chunk] update output instances with new chunk size diff=675\n"), "stream": String("stderr"), "time": String("2022-02-12T07:06:36.449116913Z")}), "_type": String("_doc")}), Object({"_id": String("YJfB7H4BWEXoWcftSIyC"), "_index": String("tracing"), "_score": Number(1.0), "_source": Object({"@timestamp": String("2022-02-12T07:06:36.449Z"), "kubernetes": Object({"container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"), "container_image": String("fluent/fluent-bit:1.8"), "container_name": String("fluent-bit"), "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"), "host": String("minikube"), "labels": Object({"controller-revision-hash": String("7f666b4988"), "k8s-app": String("fluent-bit-logging"), "kubernetes_io/cluster-service": String("true"), "pod-template-generation": String("1"), "version": String("v1")}), "namespace_name": String("default"), "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"), "pod_name": String("fluent-bit-jt95t")}), "log": String("[2022/02/12 07:06:36] [debug] [input:tail:tail.0] inode=5804978 events: IN_MODIFY \n"), "stream": String("stderr"), "time": String("2022-02-12T07:06:36.449138329Z")}), "_type": String("_doc")}), Object({"_id": String("YpfB7H4BWEXoWcftSIyC"), "_index": String("tracing"), "_score": Number(1.0), "_source": Object({"@timestamp": String("2022-02-12T07:06:36.449Z"), "kubernetes": Object({"container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"), "container_image": String("fluent/fluent-bit:1.8"), "container_name": String("fluent-bit"), "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"), "host": String("minikube"), "labels": Object({"controller-revision-hash": String("7f666b4988"), "k8s-app": String("fluent-bit-logging"), "kubernetes_io/cluster-service": String("true"), "pod-template-generation": String("1"), "version": String("v1")}), "namespace_name": String("default"), "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"), "pod_name": String("fluent-bit-jt95t")}), "log": String("[2022/02/12 07:06:36] [debug] [input chunk] update output instances with new chunk size diff=1334\n"), "stream": String("stderr"), "time": String("2022-02-12T07:06:36.449165917Z")}), "_type": String("_doc")}), Object({"_id": String("ZJfB7H4BWEXoWcftSIyC"), "_index": String("tracing"), "_score": Number(1.0), "_source": Object({"@timestamp": String("2022-02-12T07:06:36.449Z"), "kubernetes": Object({"container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"), "container_image": String("fluent/fluent-bit:1.8"), "container_name": String("fluent-bit"), "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"), "host": String("minikube"), "labels": Object({"controller-revision-hash": String("7f666b4988"), "k8s-app": String("fluent-bit-logging"), "kubernetes_io/cluster-service": String("true"), "pod-template-generation": String("1"), "version": String("v1")}), "namespace_name": String("default"), "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"), "pod_name": String("fluent-bit-jt95t")}), "log": String("[2022/02/12 07:06:36] [debug] [input chunk] update output instances with new chunk size diff=1335\n"), "stream": String("stderr"), "time": String("2022-02-12T07:06:36.44921684Z")}), "_type": String("_doc")}), Object({"_id": String("ZpfB7H4BWEXoWcftSIyC"), "_index": String("tracing"), "_score": Number(1.0), "_source": Object({"@timestamp": String("2022-02-12T07:06:36.449Z"), "kubernetes": Object({"container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"), "container_image": String("fluent/fluent-bit:1.8"), "container_name": String("fluent-bit"), "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"), "host": String("minikube"), "labels": Object({"controller-revision-hash": String("7f666b4988"), "k8s-app": String("fluent-bit-logging"), "kubernetes_io/cluster-service": String("true"), "pod-template-generation": String("1"), "version": String("v1")}), "namespace_name": String("default"), "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"), "pod_name": String("fluent-bit-jt95t")}), "log": String("[2022/02/12 07:06:36] [debug] [input:tail:tail.0] inode=5804978 events: IN_MODIFY \n"), "stream": String("stderr"), "time": String("2022-02-12T07:06:36.44923967Z")}), "_type": String("_doc")}), Object({"_id": String("aJfB7H4BWEXoWcftSIyC"), "_index": String("tracing"), "_score": Number(1.0), "_source": Object({"@timestamp": String("2022-02-12T07:06:36.449Z"), "kubernetes": Object({"container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"), "container_image": String("fluent/fluent-bit:1.8"), "container_name": String("fluent-bit"), "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"), "host": String("minikube"), "labels": Object({"controller-revision-hash": String("7f666b4988"), "k8s-app": String("fluent-bit-logging"), "kubernetes_io/cluster-service": String("true"), "pod-template-generation": String("1"), "version": String("v1")}), "namespace_name": String("default"), "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"), "pod_name": String("fluent-bit-jt95t")}), "log": String("[2022/02/12 07:06:36] [debug] [input chunk] update output instances with new chunk size diff=674\n"), "stream": String("stderr"), "time": String("2022-02-12T07:06:36.449262433Z")}), "_type": String("_doc")})]), "max_score": Number(1.0), "total": Object({"relation": String("gte"), "value": Number(10000)})}), "timed_out": Bool(false), "took": Number(258)})
+{
+    "_shards": Object({
+        "failed": Number(0),
+        "skipped": Number(0),
+        "successful": Number(1),
+        "total": Number(1)
+    }),
+    "aggregations": Object({
+        "genres": Object({
+            "buckets": Array([Object({
+                    "doc_count": Number(599000),
+                    "key": String("job_id")
+                })
+            ]),
+            "doc_count_error_upper_bound": Number(0),
+            "sum_other_doc_count": Number(0)
+        })
+    }),
+    "hits": Object({
+        "hits": Array([Object({
+                "_id": String("2ZfB7H4BWEXoWcftSJGC"),
+                "_index": String("tracing"),
+                "_score": Number(1.0),
+                "_source": Object({
+                    "@timestamp": String("2022-02-12T07:06:36.282Z"),
+                    "kubernetes": Object({
+                        "container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"),
+                        "container_image": String("fluent/fluent-bit:1.8"),
+                        "container_name": String("fluent-bit"),
+                        "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"),
+                        "host": String("minikube"),
+                        "labels": Object({
+                            "controller-revision-hash": String("7f666b4988"),
+                            "k8s-app": String("fluent-bit-logging"),
+                            "kubernetes_io/cluster-service": String("true"),
+                            "pod-template-generation": String("1"),
+                            "version": String("v1")
+                        }),
+                        "namespace_name": String("default"),
+                        "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"),
+                        "pod_name": String("fluent-bit-jt95t")
+                    }),
+                    "log": String("[2022/02/12 07:06:36] [debug] [input chunk] update output instances with new chunk size diff=675\n"),
+                    "stream": String("stderr"),
+                    "time": String("2022-02-12T07:06:36.282425023Z")
+                }),
+                "_type": String("_doc")
+            }), Object({
+                "_id": String("WJfB7H4BWEXoWcftSIyC"),
+                "_index": String("tracing"),
+                "_score": Number(1.0),
+                "_source": Object({
+                    "@timestamp": String("2022-02-12T07:06:36.449Z"),
+                    "kubernetes": Object({
+                        "container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"),
+                        "container_image": String("fluent/fluent-bit:1.8"),
+                        "container_name": String("fluent-bit"),
+                        "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"),
+                        "host": String("minikube"),
+                        "labels": Object({
+                            "controller-revision-hash": String("7f666b4988"),
+                            "k8s-app": String("fluent-bit-logging"),
+                            "kubernetes_io/cluster-service": String("true"),
+                            "pod-template-generation": String("1"),
+                            "version": String("v1")
+                        }),
+                        "namespace_name": String("default"),
+                        "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"),
+                        "pod_name": String("fluent-bit-jt95t")
+                    }),
+                    "log": String("[2022/02/12 07:06:36] [debug] [input chunk] update output instances with new chunk size diff=1333\n"),
+                    "stream": String("stderr"),
+                    "time": String("2022-02-12T07:06:36.449019726Z")
+                }),
+                "_type": String("_doc")
+            }), Object({
+                "_id": String("WpfB7H4BWEXoWcftSIyC"),
+                "_index": String("tracing"),
+                "_score": Number(1.0),
+                "_source": Object({
+                    "@timestamp": String("2022-02-12T07:06:36.449Z"),
+                    "kubernetes": Object({
+                        "container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"),
+                        "container_image": String("fluent/fluent-bit:1.8"),
+                        "container_name": String("fluent-bit"),
+                        "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"),
+                        "host": String("minikube"),
+                        "labels": Object({
+                            "controller-revision-hash": String("7f666b4988"),
+                            "k8s-app": String("fluent-bit-logging"),
+                            "kubernetes_io/cluster-service": String("true"),
+                            "pod-template-generation": String("1"),
+                            "version": String("v1")
+                        }),
+                        "namespace_name": String("default"),
+                        "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"),
+                        "pod_name": String("fluent-bit-jt95t")
+                    }),
+                    "log": String("[2022/02/12 07:06:36] [debug] [input chunk] update output instances with new chunk size diff=1334\n"),
+                    "stream": String("stderr"),
+                    "time": String("2022-02-12T07:06:36.449068195Z")
+                }),
+                "_type": String("_doc")
+            }), Object({
+                "_id": String("XJfB7H4BWEXoWcftSIyC"),
+                "_index": String("tracing"),
+                "_score": Number(1.0),
+                "_source": Object({
+                    "@timestamp": String("2022-02-12T07:06:36.449Z"),
+                    "kubernetes": Object({
+                        "container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"),
+                        "container_image": String("fluent/fluent-bit:1.8"),
+                        "container_name": String("fluent-bit"),
+                        "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"),
+                        "host": String("minikube"),
+                        "labels": Object({
+                            "controller-revision-hash": String("7f666b4988"),
+                            "k8s-app": String("fluent-bit-logging"),
+                            "kubernetes_io/cluster-service": String("true"),
+                            "pod-template-generation": String("1"),
+                            "version": String("v1")
+                        }),
+                        "namespace_name": String("default"),
+                        "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"),
+                        "pod_name": String("fluent-bit-jt95t")
+                    }),
+                    "log": String("[2022/02/12 07:06:36] [debug] [input:tail:tail.0] inode=5804978 events: IN_MODIFY \n"),
+                    "stream": String("stderr"),
+                    "time": String("2022-02-12T07:06:36.449092208Z")
+                }),
+                "_type": String("_doc")
+            }), Object({
+                "_id": String("XpfB7H4BWEXoWcftSIyC"),
+                "_index": String("tracing"),
+                "_score": Number(1.0),
+                "_source": Object({
+                    "@timestamp": String("2022-02-12T07:06:36.449Z"),
+                    "kubernetes": Object({
+                        "container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"),
+                        "container_image": String("fluent/fluent-bit:1.8"),
+                        "container_name": String("fluent-bit"),
+                        "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"),
+                        "host": String("minikube"),
+                        "labels": Object({
+                            "controller-revision-hash": String("7f666b4988"),
+                            "k8s-app": String("fluent-bit-logging"),
+                            "kubernetes_io/cluster-service": String("true"),
+                            "pod-template-generation": String("1"),
+                            "version": String("v1")
+                        }),
+                        "namespace_name": String("default"),
+                        "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"),
+                        "pod_name": String("fluent-bit-jt95t")
+                    }),
+                    "log": String("[2022/02/12 07:06:36] [debug] [input chunk] update output instances with new chunk size diff=675\n"),
+                    "stream": String("stderr"),
+                    "time": String("2022-02-12T07:06:36.449116913Z")
+                }),
+                "_type": String("_doc")
+            }), Object({
+                "_id": String("YJfB7H4BWEXoWcftSIyC"),
+                "_index": String("tracing"),
+                "_score": Number(1.0),
+                "_source": Object({
+                    "@timestamp": String("2022-02-12T07:06:36.449Z"),
+                    "kubernetes": Object({
+                        "container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"),
+                        "container_image": String("fluent/fluent-bit:1.8"),
+                        "container_name": String("fluent-bit"),
+                        "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"),
+                        "host": String("minikube"),
+                        "labels": Object({
+                            "controller-revision-hash": String("7f666b4988"),
+                            "k8s-app": String("fluent-bit-logging"),
+                            "kubernetes_io/cluster-service": String("true"),
+                            "pod-template-generation": String("1"),
+                            "version": String("v1")
+                        }),
+                        "namespace_name": String("default"),
+                        "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"),
+                        "pod_name": String("fluent-bit-jt95t")
+                    }),
+                    "log": String("[2022/02/12 07:06:36] [debug] [input:tail:tail.0] inode=5804978 events: IN_MODIFY \n"),
+                    "stream": String("stderr"),
+                    "time": String("2022-02-12T07:06:36.449138329Z")
+                }),
+                "_type": String("_doc")
+            }), Object({
+                "_id": String("YpfB7H4BWEXoWcftSIyC"),
+                "_index": String("tracing"),
+                "_score": Number(1.0),
+                "_source": Object({
+                    "@timestamp": String("2022-02-12T07:06:36.449Z"),
+                    "kubernetes": Object({
+                        "container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"),
+                        "container_image": String("fluent/fluent-bit:1.8"),
+                        "container_name": String("fluent-bit"),
+                        "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"),
+                        "host": String("minikube"),
+                        "labels": Object({
+                            "controller-revision-hash": String("7f666b4988"),
+                            "k8s-app": String("fluent-bit-logging"),
+                            "kubernetes_io/cluster-service": String("true"),
+                            "pod-template-generation": String("1"),
+                            "version": String("v1")
+                        }),
+                        "namespace_name": String("default"),
+                        "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"),
+                        "pod_name": String("fluent-bit-jt95t")
+                    }),
+                    "log": String("[2022/02/12 07:06:36] [debug] [input chunk] update output instances with new chunk size diff=1334\n"),
+                    "stream": String("stderr"),
+                    "time": String("2022-02-12T07:06:36.449165917Z")
+                }),
+                "_type": String("_doc")
+            }), Object({
+                "_id": String("ZJfB7H4BWEXoWcftSIyC"),
+                "_index": String("tracing"),
+                "_score": Number(1.0),
+                "_source": Object({
+                    "@timestamp": String("2022-02-12T07:06:36.449Z"),
+                    "kubernetes": Object({
+                        "container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"),
+                        "container_image": String("fluent/fluent-bit:1.8"),
+                        "container_name": String("fluent-bit"),
+                        "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"),
+                        "host": String("minikube"),
+                        "labels": Object({
+                            "controller-revision-hash": String("7f666b4988"),
+                            "k8s-app": String("fluent-bit-logging"),
+                            "kubernetes_io/cluster-service": String("true"),
+                            "pod-template-generation": String("1"),
+                            "version": String("v1")
+                        }),
+                        "namespace_name": String("default"),
+                        "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"),
+                        "pod_name": String("fluent-bit-jt95t")
+                    }),
+                    "log": String("[2022/02/12 07:06:36] [debug] [input chunk] update output instances with new chunk size diff=1335\n"),
+                    "stream": String("stderr"),
+                    "time": String("2022-02-12T07:06:36.44921684Z")
+                }),
+                "_type": String("_doc")
+            }), Object({
+                "_id": String("ZpfB7H4BWEXoWcftSIyC"),
+                "_index": String("tracing"),
+                "_score": Number(1.0),
+                "_source": Object({
+                    "@timestamp": String("2022-02-12T07:06:36.449Z"),
+                    "kubernetes": Object({
+                        "container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"),
+                        "container_image": String("fluent/fluent-bit:1.8"),
+                        "container_name": String("fluent-bit"),
+                        "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"),
+                        "host": String("minikube"),
+                        "labels": Object({
+                            "controller-revision-hash": String("7f666b4988"),
+                            "k8s-app": String("fluent-bit-logging"),
+                            "kubernetes_io/cluster-service": String("true"),
+                            "pod-template-generation": String("1"),
+                            "version": String("v1")
+                        }),
+                        "namespace_name": String("default"),
+                        "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"),
+                        "pod_name": String("fluent-bit-jt95t")
+                    }),
+                    "log": String("[2022/02/12 07:06:36] [debug] [input:tail:tail.0] inode=5804978 events: IN_MODIFY \n"),
+                    "stream": String("stderr"),
+                    "time": String("2022-02-12T07:06:36.44923967Z")
+                }),
+                "_type": String("_doc")
+            }), Object({
+                "_id": String("aJfB7H4BWEXoWcftSIyC"),
+                "_index": String("tracing"),
+                "_score": Number(1.0),
+                "_source": Object({
+                    "@timestamp": String("2022-02-12T07:06:36.449Z"),
+                    "kubernetes": Object({
+                        "container_hash": String("fluent/fluent-bit@sha256:35de7f8e4cf845c060d3feb09e19254177993537dfb7b8a06a8ba5748e6b8551"),
+                        "container_image": String("fluent/fluent-bit:1.8"),
+                        "container_name": String("fluent-bit"),
+                        "docker_id": String("449432e52db28a44e72b04833c4a6d4e6e73408ed272759f359604507f57a34f"),
+                        "host": String("minikube"),
+                        "labels": Object({
+                            "controller-revision-hash": String("7f666b4988"),
+                            "k8s-app": String("fluent-bit-logging"),
+                            "kubernetes_io/cluster-service": String("true"),
+                            "pod-template-generation": String("1"),
+                            "version": String("v1")
+                        }),
+                        "namespace_name": String("default"),
+                        "pod_id": String("e3747570-6e4d-4627-a49a-5063784dc67f"),
+                        "pod_name": String("fluent-bit-jt95t")
+                    }),
+                    "log": String("[2022/02/12 07:06:36] [debug] [input chunk] update output instances with new chunk size diff=674\n"),
+                    "stream": String("stderr"),
+                    "time": String("2022-02-12T07:06:36.449262433Z")
+                }),
+                "_type": String("_doc")
+            })
+        ]),
+        "max_score": Number(1.0),
+        "total": Object({
+            "relation": String("gte"),
+            "value": Number(10000)
+        })
+    }),
+    "timed_out": Bool(false),
+    "took": Number(258)
+})

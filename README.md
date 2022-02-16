@@ -118,3 +118,5 @@ Then, the result will be both saved as a csv file and printed out on the console
 ### Minor debugging
 
 https://serverfault.com/questions/1063166/kube-proxy-wont-start-in-minikube-because-of-permission-denied-issue-with-proc
+
+https://www.elastic.co/guide/en/elasticsearch/reference/6.8/search-request-from-size.html

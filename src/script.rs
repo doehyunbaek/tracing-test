@@ -67,32 +67,56 @@ async fn get_job_data(
     index: &str,
     job_id: String,
 ) -> Result<(String, Vec<JobDataMessage>), Box<dyn std::error::Error>> {
-    //todo send query for getting data
+    //todo fix query, change the required field + term name and value as real job_id
+    let query = json!({
+      "_source": ["a", "b", "@timestamp"],
+      "query": {
+        "term": {
+          "a": {
+            "value": "job_id"
+          }
+        }
+      }
+    });
     let response = client
         .search(SearchParts::Index(&[index]))
         .from(0)
-        .size(-1) //return all
-        .body(json!({
-            "query": {
-                "match": {
-                    "message": "Elasticsearch rust"
-                }
-            }
-        }))
+        .size(5) //todo need to check what the max would be for this value since we would like to return all data in certain periods
+        .body(query)
         .send()
         .await?;
 
-    let response_body = response.json::<Value>().await?;
-    println!("second query value: {:?}", response_body);
+    let mut response_body = response.json::<Value>().await?;
+    let data = response_body
+        .get_mut("hits")
+        .unwrap()
+        .get_mut("hits")
+        .unwrap();
+    println!("second query value: {:?}", data);
+    let mut job_data = vec![];
+    for data in data.as_array_mut().unwrap().iter_mut() {
+        let data: Hit = serde_json::from_value(data.take()).unwrap();
+        job_data.push(data._source);
+    }
+
     //todo convert response body to vec[jobdatamessage]
 
-    Ok((job_id, vec![]))
+    Ok((job_id, job_data))
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+struct Hit {
+    _index: String,
+    _type: String,
+    _id: String,
+    _score: f64,
+    _source: JobDataMessage,
 }
 
 ///lib으로 넣어서 모듈화 해야되는데.....
-#[derive(Debug, Eq)]
+#[derive(Debug, Clone, Eq, Serialize, Deserialize)]
 struct JobDataMessage {
-    job_id: String,
+    job_id: String, //pretty much for debugging purpose
     actor: i64,     //0 for sender, 1 for middle, 2 for final
     action_no: i64, //0 for start, -1 for finish, n for actions
     timestamp: i64, //UNIX timestamp
