@@ -1,3 +1,5 @@
+use std::time::SystemTime;
+
 use log::{trace, LevelFilter};
 use serde::Serialize;
 use tokio::sync::mpsc;
@@ -7,7 +9,6 @@ use tokio::sync::mpsc;
 #[tokio::main]
 async fn main() {
     //create senders
-    println!("starting tracing test");
     json_logger::init("app_name", LevelFilter::Info).unwrap();
     let (middle_tx, mut middle_rx) = mpsc::unbounded_channel::<JobData>();
     let (final_tx, mut final_rx) = mpsc::unbounded_channel::<JobData>();
@@ -20,6 +21,7 @@ async fn main() {
                 job_id: job_id.clone(),
                 actor: 0,
                 action_no: 0,
+                timestamp: timestamp(),
             };
             let j = serde_json::to_string(&job_data).unwrap();
             print!("{}", j);
@@ -33,6 +35,7 @@ async fn main() {
                     job_id: job_id.clone(),
                     actor: 0,
                     action_no: counter,
+                    timestamp: timestamp(),
                 };
                 let j = serde_json::to_string(&job_data).unwrap();
                 println!("{}", j);
@@ -49,6 +52,7 @@ async fn main() {
                 job_id: job_id.clone(),
                 actor: 0,
                 action_no: -1,
+                timestamp: timestamp(),
             };
             let j = serde_json::to_string(&job_data).unwrap();
             println!("{}", j);
@@ -81,4 +85,13 @@ struct JobData {
     job_id: String,
     actor: i64,     //0 for sender, 1 for middle, 2 for final
     action_no: i64, //0 for start, -1 for finish, n for actions
+    timestamp: i64, //unix timestamp in milliseconds
+}
+
+fn timestamp() -> i64 {
+    let time = SystemTime::now()
+        .duration_since(SystemTime::UNIX_EPOCH)
+        .unwrap()
+        .as_millis();
+    time as i64
 }

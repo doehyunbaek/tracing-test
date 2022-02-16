@@ -30,13 +30,13 @@ WORKDIR /app/tracing-test
 # RUN eval `ssh-agent` && ssh-add -k ~/.ssh/id_rsa && cargo build --target x86_64-unknown-linux-gnu --release
 
 RUN cargo update --aggressive
-RUN cargo build --target x86_64-unknown-linux-gnu --release
+RUN cargo build --bin tracing-test --target x86_64-unknown-linux-gnu --release
 
 # renew main.rs && rebuild
 COPY ./src /app/tracing-test/src/
 RUN echo "" >> /app/tracing-test/src/main.rs
 # RUN eval `ssh-agent` && ssh-add -k ~/.ssh/id_rsa && cargo build --target x86_64-unknown-linux-gnu --release
-RUN cargo build --target x86_64-unknown-linux-gnu --release
+RUN cargo build --bin tracing-test --target x86_64-unknown-linux-gnu --release
 
 
 

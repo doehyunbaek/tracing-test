@@ -11,10 +11,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let client = Elasticsearch::new(transport);
     let job_ids = get_unique_job_ids(&client, "tracing").await?;
     let mut futures = vec![];
+    // futures.push(get_job_data(&client, "tracing", job_ids.get(0).unwrap().to_string()));
+
     for job_id in job_ids {
         futures.push(get_job_data(&client, "tracing", job_id));
     }
     let results = join_all(futures).await;
+    println!("results: {:?}", results);
     parse_data(results);
     Ok(())
 }
@@ -27,11 +30,11 @@ async fn get_unique_job_ids(
     let response = client
         .search(SearchParts::Index(&[index]))
         .from(0)
-        .size(-1) //return all
+        .size(1) //todo -1 is default which is 10
         .body(json!({
             "aggs": {
                 "job_ids": {
-                  "terms": { "field": "a.keyword"}
+                  "terms": { "field": "job_id.keyword"}
                 }
             }
         }))
@@ -46,6 +49,7 @@ async fn get_unique_job_ids(
         .unwrap()
         .get_mut("buckets")
         .unwrap();
+    println!("first query response: {}", buckets);
     let mut job_ids = vec![];
 
     for bucket in buckets.as_array_mut().unwrap().iter_mut() {
@@ -68,12 +72,13 @@ async fn get_job_data(
     job_id: String,
 ) -> Result<(String, Vec<JobDataMessage>), Box<dyn std::error::Error>> {
     //todo fix query, change the required field + term name and value as real job_id
+    println!("this is job_id: {}", job_id);
     let query = json!({
-      "_source": ["a", "b", "@timestamp"],
+      "_source": ["job_id", "actor", "action_no", "timestamp"],
       "query": {
         "term": {
-          "a": {
-            "value": "job_id"
+          "job_id": {
+            "value": job_id
           }
         }
       }
@@ -81,11 +86,10 @@ async fn get_job_data(
     let response = client
         .search(SearchParts::Index(&[index]))
         .from(0)
-        .size(5) //todo need to check what the max would be for this value since we would like to return all data in certain periods
+        .size(100) //todo need to check what the max would be for this value since we would like to return all data in certain periods
         .body(query)
         .send()
         .await?;
-
     let mut response_body = response.json::<Value>().await?;
     let data = response_body
         .get_mut("hits")
@@ -95,8 +99,11 @@ async fn get_job_data(
     println!("second query value: {:?}", data);
     let mut job_data = vec![];
     for data in data.as_array_mut().unwrap().iter_mut() {
-        let data: Hit = serde_json::from_value(data.take()).unwrap();
-        job_data.push(data._source);
+        let result: Result<Hit, serde_json::Error> = serde_json::from_value(data.take());
+        println!("dd: {:?}", result);
+        if let Ok(data) = result {
+            job_data.push(data._source);
+        }
     }
 
     //todo convert response body to vec[jobdatamessage]
@@ -119,6 +126,7 @@ struct JobDataMessage {
     job_id: String, //pretty much for debugging purpose
     actor: i64,     //0 for sender, 1 for middle, 2 for final
     action_no: i64, //0 for start, -1 for finish, n for actions
+    // #[serde(rename = "@timestamp")]
     timestamp: i64, //UNIX timestamp
 }
 
@@ -146,6 +154,7 @@ impl Ord for JobDataMessage {
 fn parse_data(datas: Vec<Result<(String, Vec<JobDataMessage>), Box<dyn std::error::Error>>>) {
     for data in datas {
         let (job_id, data) = data.unwrap();
+        println!("job_id: {}, and data: {:?}", job_id, data);
         let (first_trips, second_trips) = preprocess(&data);
         let first_metric = find_average_and_st(&first_trips);
         let second_metric = find_average_and_st(&second_trips);
@@ -180,10 +189,20 @@ fn preprocess<'a>(data: &'a [JobDataMessage]) -> (Vec<i64>, Vec<i64>) {
     for (_action_no, mut messages) in sorted_data {
         if messages.len() != 3 {
             //we should only have messages for sender, middle, final
+            println!("incomplete messages: {:?}", messages);
             continue;
         } else {
             //0 for sender, 1 for middle, 2 for final
+            println!("complete messages: {:?}", messages);
             messages.sort();
+            println!(
+                "first metric: {}",
+                messages.get(1).unwrap().timestamp - messages.get(0).unwrap().timestamp
+            );
+            println!(
+                "second metric: {}",
+                messages.get(2).unwrap().timestamp - messages.get(1).unwrap().timestamp
+            );
             sender_to_middle
                 .push(messages.get(1).unwrap().timestamp - messages.get(0).unwrap().timestamp);
             middle_to_final
@@ -191,6 +210,10 @@ fn preprocess<'a>(data: &'a [JobDataMessage]) -> (Vec<i64>, Vec<i64>) {
         }
     }
 
+    println!(
+        "processed data: {:?}, {:?}",
+        sender_to_middle, middle_to_final
+    );
     (sender_to_middle, middle_to_final)
 }
 
