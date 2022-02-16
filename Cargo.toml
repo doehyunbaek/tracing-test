@@ -17,19 +17,18 @@ path = "src/script.rs"
 # tracing 
 # log 
 # futures is all you need for this 
+console-subscriber = "0.1.2"
 elasticsearch = "7.14.0-alpha.1"
 env_logger = "0.8.1"
-json_logger = "0.1.0"
-rustc-serialize = "0.3.24"
-serde_json = "1.0"
-serde = { version = "1.0.100", default-features = false }
 futures = "0.3.5"
 futures-util = "0.3.5"
+json_logger = "0.1.0"
 log = '0.4.11'
+serde = {version = "1.0.100", default-features = false}
+serde_json = "1.0"
 thiserror = "1.0.20"
 tokio = {version = "1.5.0", features = ["full", "tracing"]}
-console-subscriber = "0.1.2"
 # tracing = "0.1.30"
 # tracing-subscriber = "0.2"
 rand = "0.8.4"
-uuid = { version = "0.8", features = ["serde", "v4"] }
+uuid = {version = "0.8", features = ["serde", "v4"]}

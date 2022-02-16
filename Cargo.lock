@@ -1630,7 +1630,6 @@ dependencies = [
  "json_logger",
  "log",
  "rand",
- "rustc-serialize",
  "serde",
  "serde_json",
  "thiserror",

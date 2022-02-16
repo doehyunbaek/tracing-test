@@ -1,8 +1,6 @@
 use log::{trace, LevelFilter};
-use rustc_serialize::{json, Encodable};
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use tokio::sync::mpsc;
-use uuid::Uuid;
 
 //structure
 //three actors, sender, middle, final
