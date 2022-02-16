@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use elasticsearch::{http::transport::Transport, Elasticsearch, SearchParts};
 use futures::future::join_all;
 use serde::{Deserialize, Serialize};
@@ -88,12 +90,29 @@ async fn get_job_data(
 }
 
 ///lib으로 넣어서 모듈화 해야되는데.....
-#[derive(Debug)]
+#[derive(Debug, Eq)]
 struct JobDataMessage {
     job_id: String,
     actor: i64,     //0 for sender, 1 for middle, 2 for final
     action_no: i64, //0 for start, -1 for finish, n for actions
     timestamp: i64, //UNIX timestamp
+}
+
+impl PartialEq for JobDataMessage {
+    fn eq(&self, other: &Self) -> bool {
+        self.actor == other.actor
+    }
+}
+
+impl PartialOrd for JobDataMessage {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        Some(self.actor.cmp(&other.actor))
+    }
+}
+impl Ord for JobDataMessage {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        self.actor.cmp(&other.actor)
+    }
 }
 
 /// parse data and produce some meaningful metric and print to console for now
@@ -104,8 +123,8 @@ fn parse_data(datas: Vec<Result<(String, Vec<JobDataMessage>), Box<dyn std::erro
     for data in datas {
         let (job_id, data) = data.unwrap();
         let (first_trips, second_trips) = preprocess(&data);
-        let first_metric = find_average_and_st(first_trips);
-        let second_metric = find_average_and_st(second_trips);
+        let first_metric = find_average_and_st(&first_trips);
+        let second_metric = find_average_and_st(&second_trips);
         println!(
             "messages deliver time between sender and middleware for job_id: {}, is {:?}",
             job_id, first_metric
@@ -117,10 +136,38 @@ fn parse_data(datas: Vec<Result<(String, Vec<JobDataMessage>), Box<dyn std::erro
     }
 }
 
-fn preprocess<'a>(data: &'a [JobDataMessage]) -> (&'a [i64], &'a [i64]) {
-    //todo preprocess data
+fn preprocess<'a>(data: &'a [JobDataMessage]) -> (Vec<i64>, Vec<i64>) {
+    //1. first collect by action_id,
+    //2. then calculate time between those messages
+    let mut sender_to_middle = vec![];
+    let mut middle_to_final = vec![];
+    let mut sorted_data: HashMap<i64, Vec<&'a JobDataMessage>> = HashMap::new(); //key is action_no, value is [jobdatamessage];
+    for a in data {
+        match sorted_data.entry(a.action_no) {
+            std::collections::hash_map::Entry::Occupied(mut entry) => {
+                entry.get_mut().push(a);
+            }
+            std::collections::hash_map::Entry::Vacant(entry) => {
+                entry.insert(vec![a]);
+            }
+        }
+    }
 
-    todo!()
+    for (_action_no, mut messages) in sorted_data {
+        if messages.len() != 3 {
+            //we should only have messages for sender, middle, final
+            continue;
+        } else {
+            //0 for sender, 1 for middle, 2 for final
+            messages.sort();
+            sender_to_middle
+                .push(messages.get(1).unwrap().timestamp - messages.get(0).unwrap().timestamp);
+            middle_to_final
+                .push(messages.get(2).unwrap().timestamp - messages.get(1).unwrap().timestamp);
+        }
+    }
+
+    (sender_to_middle, middle_to_final)
 }
 
 fn find_average_and_st(data: &[i64]) -> (f64, f64) {
