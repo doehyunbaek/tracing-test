@@ -17,7 +17,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         futures.push(get_job_data(&client, "tracing", job_id));
     }
     let results = join_all(futures).await;
-    println!("results: {:?}", results);
+    // println!("results: {:?}", results);
     parse_data(results);
     Ok(())
 }
@@ -49,7 +49,7 @@ async fn get_unique_job_ids(
         .unwrap()
         .get_mut("buckets")
         .unwrap();
-    println!("first query response: {}", buckets);
+    // println!("first query response: {}", buckets);
     let mut job_ids = vec![];
 
     for bucket in buckets.as_array_mut().unwrap().iter_mut() {
@@ -96,7 +96,7 @@ async fn get_job_data(
         .unwrap()
         .get_mut("hits")
         .unwrap();
-    println!("second query value: {:?}", data);
+    // println!("second query value: {:?}", data);
     let mut job_data = vec![];
     for data in data.as_array_mut().unwrap().iter_mut() {
         let result: Result<Hit, serde_json::Error> = serde_json::from_value(data.take());
@@ -154,7 +154,7 @@ impl Ord for JobDataMessage {
 fn parse_data(datas: Vec<Result<(String, Vec<JobDataMessage>), Box<dyn std::error::Error>>>) {
     for data in datas {
         let (job_id, data) = data.unwrap();
-        println!("job_id: {}, and data: {:?}", job_id, data);
+        // println!("job_id: {}, and data: {:?}", job_id, data);
         let (first_trips, second_trips) = preprocess(&data);
         let first_metric = find_average_and_st(&first_trips);
         let second_metric = find_average_and_st(&second_trips);
@@ -189,20 +189,20 @@ fn preprocess<'a>(data: &'a [JobDataMessage]) -> (Vec<i64>, Vec<i64>) {
     for (_action_no, mut messages) in sorted_data {
         if messages.len() != 3 {
             //we should only have messages for sender, middle, final
-            println!("incomplete messages: {:?}", messages);
+            // println!("incomplete messages: {:?}", messages);
             continue;
         } else {
             //0 for sender, 1 for middle, 2 for final
-            println!("complete messages: {:?}", messages);
+            // println!("complete messages: {:?}", messages);
             messages.sort();
-            println!(
-                "first metric: {}",
-                messages.get(1).unwrap().timestamp - messages.get(0).unwrap().timestamp
-            );
-            println!(
-                "second metric: {}",
-                messages.get(2).unwrap().timestamp - messages.get(1).unwrap().timestamp
-            );
+            // println!(
+            //     "first metric: {}",
+            //     messages.get(1).unwrap().timestamp - messages.get(0).unwrap().timestamp
+            // );
+            // println!(
+            //     "second metric: {}",
+            //     messages.get(2).unwrap().timestamp - messages.get(1).unwrap().timestamp
+            // );
             sender_to_middle
                 .push(messages.get(1).unwrap().timestamp - messages.get(0).unwrap().timestamp);
             middle_to_final
@@ -210,10 +210,10 @@ fn preprocess<'a>(data: &'a [JobDataMessage]) -> (Vec<i64>, Vec<i64>) {
         }
     }
 
-    println!(
-        "processed data: {:?}, {:?}",
-        sender_to_middle, middle_to_final
-    );
+    // println!(
+    //     "processed data: {:?}, {:?}",
+    //     sender_to_middle, middle_to_final
+    // );
     (sender_to_middle, middle_to_final)
 }
 
