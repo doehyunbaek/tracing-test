@@ -32,3 +32,5 @@ tokio = {version = "1.5.0", features = ["full", "tracing"]}
 # tracing-subscriber = "0.2"
 rand = "0.8.4"
 uuid = {version = "0.8", features = ["serde", "v4"]}
+prometheus-client = "0.15.1"
+tide = "0.16"

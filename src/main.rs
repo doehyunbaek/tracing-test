@@ -1,91 +1,69 @@
+use std::sync::{Arc, Mutex};
 use std::time::SystemTime;
 
-use log::{trace, LevelFilter};
-use serde::Serialize;
+use rand::prelude::StdRng;
+use rand::{Rng, SeedableRng};
+
 use tokio::sync::mpsc;
 
-//structure
-//three actors, sender, middle, final
+use prometheus_client::encoding::text::{encode, Encode};
+use prometheus_client::metrics::family::Family;
+use prometheus_client::metrics::histogram::{exponential_buckets, Histogram};
+use prometheus_client::registry::Registry;
+
 #[tokio::main]
 async fn main() {
-    //create senders
-    json_logger::init("app_name", LevelFilter::Info).unwrap();
-    let (middle_tx, mut middle_rx) = mpsc::unbounded_channel::<JobData>();
-    let (final_tx, mut final_rx) = mpsc::unbounded_channel::<JobData>();
+    let mut registry = Registry::default();
+    let middle_actor_latency = Family::<Labels, Histogram>::new_with_constructor(|| {
+        Histogram::new(exponential_buckets(2.0, 2.0, 7))
+    });
+    registry.register(
+        "middle_actor_latency",
+        "latency for middle actor",
+        middle_actor_latency.clone(),
+    );
 
-    for i in 0..1 {
-        let middle_tx_clone = middle_tx.clone();
-        tokio::spawn(async move {
-            let job_id = format!("{}", i);
-            let job_data = JobData {
-                job_id: job_id.clone(),
-                actor: 0,
-                action_no: 0,
-                timestamp: timestamp(),
-            };
-            let j = serde_json::to_string(&job_data).unwrap();
-            print!("{}", j);
-            middle_tx_clone.send(job_data).unwrap();
-            // trace!("job has begun", {type: "sender", job_id: i});
-            // trace!("type: sender, msg:{:?}", start_message);
+    let mut app = tide::with_state(State {
+        registry: Arc::new(Mutex::new(registry)),
+    });
 
-            let mut counter = 1;
-            loop {
-                let job_data = JobData {
-                    job_id: job_id.clone(),
-                    actor: 0,
-                    action_no: counter,
-                    timestamp: timestamp(),
-                };
-                let j = serde_json::to_string(&job_data).unwrap();
-                println!("{}", j);
-                middle_tx_clone.send(job_data).unwrap();
-                tokio::time::sleep(tokio::time::Duration::from_secs(1)).await;
-                counter += 1;
-                if counter > 100 {
-                    trace!("job has finished");
-                    break;
-                }
-            }
+    // setup metric endpoint serving. I used tide here as original example
+    // used tide, but it does not matter which server framework is used, if it can
+    // get access to histogram registry, it will do
+    setup_serve(&mut app);
 
-            let job_data = JobData {
-                job_id: job_id.clone(),
-                actor: 0,
-                action_no: -1,
-                timestamp: timestamp(),
-            };
-            let j = serde_json::to_string(&job_data).unwrap();
-            println!("{}", j);
-            middle_tx_clone.send(job_data.clone()).unwrap();
-        });
-    }
+    let (middle_tx, mut middle_rx) = mpsc::unbounded_channel::<i64>();
 
-    //create middle
+    // we send data to our middle_actor here.
+    let middle_tx_clone = middle_tx.clone();
     tokio::spawn(async move {
-        while let Some(mut msg) = middle_rx.recv().await {
-            msg.actor = 1;
-            let j = serde_json::to_string(&msg).unwrap();
-            println!("{}", j);
-            final_tx.send(msg).unwrap();
+        loop {
+            // throttle sending a little bit
+            tokio::time::sleep(tokio::time::Duration::from_millis(1)).await;
+            middle_tx_clone.send(timestamp()).unwrap();
         }
     });
 
-    //create final
+    // we receive data at middle actor and measure latency here.
+    let middle_actor_latency_clone = middle_actor_latency.clone();
+    tokio::spawn(async move {
+        while let Some(msg) = middle_rx.recv().await {
+            // we mock actor activity with random sleep
+            let mut rng: StdRng = SeedableRng::seed_from_u64(0);
+            let randval = rng.gen_range(0..1280);
+            tokio::time::sleep(tokio::time::Duration::from_micros(randval)).await;
 
-    while let Some(mut msg) = final_rx.recv().await {
-        msg.actor = 2;
-        let j = serde_json::to_string(&msg).unwrap();
-        println!("{}", j);
-    }
-}
+            // measure latency with timestamp difference
+            let timediff = timestamp() - msg;
+            middle_actor_latency_clone
+                .get_or_create(&Labels {
+                    actor: "middle".to_owned(),
+                })
+                .observe(timediff as f64);
+        }
+    });
 
-///enum 해야되는데.....
-#[derive(Debug, Clone, Serialize)]
-struct JobData {
-    job_id: String,
-    actor: i64,     //0 for sender, 1 for middle, 2 for final
-    action_no: i64, //0 for start, -1 for finish, n for actions
-    timestamp: i64, //unix timestamp in milliseconds
+    let _ = app.listen("0.0.0.0:8080").await;
 }
 
 fn timestamp() -> i64 {
@@ -94,4 +72,28 @@ fn timestamp() -> i64 {
         .unwrap()
         .as_millis();
     time as i64
+}
+
+#[derive(Clone)]
+struct State {
+    registry: Arc<Mutex<Registry<Family<Labels, Histogram>>>>,
+}
+
+#[derive(Clone, Hash, PartialEq, Eq, Encode)]
+struct Labels {
+    actor: String,
+}
+
+fn setup_serve(app: &mut tide::Server<State>) {
+    tide::log::start();
+    app.at("/metrics")
+        .get(|req: tide::Request<State>| async move {
+            let mut encoded = Vec::new();
+            encode(&mut encoded, &req.state().registry.lock().unwrap()).unwrap();
+            let response = tide::Response::builder(200)
+                .body(encoded)
+                .content_type("application/openmetrics-text; version=1.0.0; charset=utf-8")
+                .build();
+            Ok(response)
+        });
 }
