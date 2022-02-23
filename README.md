@@ -1,5 +1,7 @@
 ## Goal
 
+For walkthrough of prometheus based tracing, read [PROMETHEUS.md](PROMETHEUS.md).
+
 Goal of this repo is to see how elaborate elasticsearch query can be for our purpose
 we will be running few hundred async jobs simulatenously and sending the logs to the efk
 
